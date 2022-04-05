@@ -92,7 +92,7 @@ INCS_Release := \
 	-I/home/wonik_master/.cache/node-gyp/16.14.1/deps/v8/include
 
 OBJS := \
-	$(obj).target/$(TARGET)/hello.o
+	$(obj).target/$(TARGET)/wonikconnect4.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)
