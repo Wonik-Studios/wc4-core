@@ -56,7 +56,7 @@ function winAssert(input){
     }
 }
 
-/*
+
 
 function basicPrompt(){
     readline.question("Column Index:", ans => {
@@ -80,9 +80,10 @@ game.makeMove(1, WonikConnect4.ai(game.board, true))
 game.printBoard()
 basicPrompt()
 
-*/
 
 
+
+/*
 let sleep = ms => new Promise(res => setTimeout(res, ms))
 
 async function main(){
@@ -100,3 +101,4 @@ async function main(){
 }
 
 main()
+*/
