@@ -1,5 +1,5 @@
 const { read } = require("fs");
-let WonikConnect4 = require("./build/Release/addon.node")
+let WonikConnect4 = require("./build/Release/wc4.node")
 let Gameplay = require("./game.js")
 
 const readline = require('readline').createInterface({
