@@ -1,11 +1,19 @@
-// addon.cc
+//Wc4: A smart connect 4 AI
+
+/*
+Last Edit: 2022-04-09
+
+Authors:
+Nathan Kim (Wonik Member)
+Aryan Zafer (Wonik Member)
+*/
+
 #include <node.h>
 #include <vector>
 
 using std::vector;
 
-class ConnectFourAI
-{
+class ConnectFourAI{
 public:
     ConnectFourAI()
     {

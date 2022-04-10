@@ -1,4 +1,3 @@
-const { read } = require("fs");
 let WonikConnect4 = require("./build/Release/wc4.node")
 let Gameplay = require("./game.js")
 
@@ -11,31 +10,7 @@ let game = new Gameplay();
 
 game.generateBoard(7, 6)
 
-/*
-let board = [
-    [0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0]
-]
-
-
-
-game.makeMove(1, 1)
-game.makeMove(1, 1)
-game.makeMove(1, 1)
-game.makeMove(1, 1)
-game.makeMove(1, 1)
-game.makeMove(1, 1)
-
-game.printBoard(game.board)
-*/
-
 function winAssert(input){
-    
-
     switch (input){
         case 200:
             console.log("\n")
@@ -79,26 +54,3 @@ game.makeMove(1, WonikConnect4.ai(game.board, true))
 
 game.printBoard()
 basicPrompt()
-
-
-
-
-/*
-let sleep = ms => new Promise(res => setTimeout(res, ms))
-
-async function main(){
-    while (true){
-        game.makeMove(1, WonikConnect4.ai(game.board, true))
-        game.printBoard()
-        winAssert(WonikConnect4.winCheck(game.board))
-        await sleep(500)
-
-        game.makeMove(2, WonikConnect4.ai(game.board, false))
-        game.printBoard()
-        winAssert(WonikConnect4.winCheck(game.board))
-        await sleep(500)
-    }
-}
-
-main()
-*/
