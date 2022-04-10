@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "addon",
+      "target_name": "wc4",
       "sources": [ "wonikconnect4.cpp" ]
     }
   ]
