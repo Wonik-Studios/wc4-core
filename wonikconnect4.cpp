@@ -12,13 +12,8 @@ Aryan Zafer (Wonik Member)
 #include <vector>
 
 using std::vector;
-
 class ConnectFourAI {
-    int maxRecursion;
     public:
-        ConnectFourAI() {
-        }
-
         // Takes in board as 2d array. Also takes in the player turn.
         // The parameter of recursionLevel will be important to determine whether to return
         // the best move or the evaluation of the position (it will return the best move when it is equal to 1)
@@ -26,16 +21,13 @@ class ConnectFourAI {
             int maxRecursion = 6;
             int bestChoiceVal = isPlayerOneTurn ? -200 : 200;
             int colBestChoice = 0;
-            vector<int> choices;
             int result = checkForWin(board);
 
             if(result != 1){
                 return result;
             }
             else if(recursionLevel == maxRecursion) {
-                if(result == 1) {
-                    return evaluate(board);
-                }
+                return evaluate(board);
             }
 
             for(int i=0; i < board[0].size(); i++) {
