@@ -49,8 +49,8 @@ function basicPrompt(){
     })
 }
 
-console.log("You are X\n")
-game.makeMove(1, WonikConnect4.ai(game.board, true))
+console.log("You are O\n")
+//game.makeMove(1, WonikConnect4.ai(game.board, true))
 
 game.printBoard()
 basicPrompt()
