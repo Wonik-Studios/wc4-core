@@ -28,7 +28,7 @@ function winAssert(input){
 }
 
 function run(){
-    let aiMove1 = WonikConnect4.ai(game.board, true)
+    let aiMove1 = WonikConnect4.ai(game.board, true, 8)
     game.makeMove(1, aiMove1)
     
     console.clear()
@@ -36,7 +36,7 @@ function run(){
 
     winAssert(WonikConnect4.winCheck(game.board))
 
-    let aiMove2 = WonikConnect4.ai(game.board, false)
+    let aiMove2 = WonikConnect4.ai(game.board, false, 8)
     game.makeMove(2, aiMove2)
 
     console.clear()

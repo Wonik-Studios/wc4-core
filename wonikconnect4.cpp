@@ -31,7 +31,7 @@ class ConnectFourAI {
 
             for(int i=0; i < board[0].size(); i++) {
                 if(board[0][i] == 0) {
-                    int move = makeMoveAI(makeMove(board, i, isPlayerOneTurn), !isPlayerOneTurn, recursionLevel + 1);
+                    int move = makeMoveAI(makeMove(board, i, isPlayerOneTurn), !isPlayerOneTurn, recursionLevel + 1, maxRecursion);
                     if(isPlayerOneTurn && move == 200) {
                         if(recursionLevel == 1) {
                             return i;
@@ -511,8 +511,9 @@ namespace node_wrapper
     void mmai_wrapper(const FunctionCallbackInfo<Value> &args)
     {
         Isolate *isolate = args.GetIsolate();
+        Local<Context> context = isolate->GetCurrentContext();
         vector<vector<int>> vector_board = vector_intermediate(isolate, Local<Array>::Cast(args[0]));
-        args.GetReturnValue().Set(ConnectFourAI::makeMoveAI(vector_board, args[1]->BooleanValue(isolate), 1));
+        args.GetReturnValue().Set(ConnectFourAI::makeMoveAI(vector_board, args[1]->BooleanValue(isolate), 1, args[2]->IntegerValue(context).FromJust()));
     }
 
     void cfw_wrapper(const FunctionCallbackInfo<Value> &args)
