@@ -18,7 +18,7 @@ class ConnectFourAI {
         // The parameter of recursionLevel will be important to determine whether to return
         // the best move or the evaluation of the position (it will return the best move when it is equal to 1)
         static int makeMoveAI(vector<vector<int>> board, bool isPlayerOneTurn, int recursionLevel) {
-            int maxRecursion = 6;
+            int maxRecursion = 7;
             int bestChoiceVal = isPlayerOneTurn ? -200 : 200;
             int colBestChoice = 0;
             int result = checkForWin(board);
@@ -47,12 +47,12 @@ class ConnectFourAI {
                     }
                     else {
                         if(isPlayerOneTurn){
-                            if(move > bestChoiceVal){
+                            if(move >= bestChoiceVal){
                                 bestChoiceVal = move;
                                 colBestChoice = i;
                             }
                         } else {
-                            if(move < bestChoiceVal){
+                            if(move <= bestChoiceVal){
                                 bestChoiceVal = move;
                                 colBestChoice = i;
                             }
@@ -97,37 +97,38 @@ class ConnectFourAI {
             }
 
             for(int i=0; i < 6; i++) {
-                bool isPossible = true;
-
                 for(int j=0; j < 4; j++) {
                     if(horizontalPossibilities[j]) {
-                        int count = 0;
-                        int token = board[board.size() - i - 1][j];
-                        
+                        int playerOneCount = 0;
+                        int playerTwoCount = 0;
+
                         for(int z=0; z < 4; z++) {
-                            if(board[board.size() - i - 1][j + z] == 0) {
-                                int loc = j + z - 4;
-                                if(j + z - 4 < 0) {
-                                    loc = 0;
-                                }
+                            int tkn = board[board.size() - i - 1][j + z];
 
-                                while(loc != j + z && loc < sizeof(horizontalPossibilities)) {
-                                    horizontalPossibilities[loc] = false;
-                                    loc++;
+                            if(tkn == 0) {
+                                if(j + z < 4) {
+                                    for(int n=0; n < j + z; n++) {
+                                        horizontalPossibilities[j + z] = false;
+                                    }
+                                } else {
+                                    for(int n=0; n < 7 - j - z; n++) {
+                                        horizontalPossibilities[3 - n] = false;
+                                    }
                                 }
-                                break;
                             }
-                            else if(token != board[board.size() - i - 1][j + z]) {
-                                break;
+                            else if(tkn == 1) {
+                                playerOneCount++;
+                                playerTwoCount = 0;
+                                if(playerOneCount == 4) {
+                                    return 200;
+                                }
                             }
-                            count++;
-                        }
-
-                        if(count == 4) {
-                            if(token == 1) {
-                                return 200;
-                            } else {
-                                return -200;
+                            else {
+                                playerTwoCount++;
+                                playerOneCount = 0;
+                                if(playerTwoCount == 4) {
+                                    return -200;
+                                }
                             }
                         }
                     }
@@ -474,6 +475,7 @@ class ConnectFourAI {
             return true;
         }
 };
+
 
 namespace node_wrapper
 {
