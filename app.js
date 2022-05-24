@@ -1,10 +1,12 @@
 let WonikConnect4 = require("./build/Release/wc4.node")
 let Gameplay = require("./game.js")
 
+
 const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
   });
+
 
 let game = new Gameplay();
 
@@ -32,7 +34,7 @@ function winAssert(input){
 }
 
 
-
+/*
 function basicPrompt(){
     readline.question("Column Index:", ans => {
         console.log("\n")
@@ -44,13 +46,34 @@ function basicPrompt(){
         game.makeMove(1, WonikConnect4.ai(game.board, true))
         game.printBoard()
         winAssert(WonikConnect4.winCheck(game.board))
+        console.log(JSON.stringify(game.board))
+        basicPrompt()
+    })
+}
+*/
 
+function basicPrompt(){
+    readline.question("...", () => {
+        run()
         basicPrompt()
     })
 }
 
-console.log("You are O\n")
-//game.makeMove(1, WonikConnect4.ai(game.board, true))
+function run(){
+    let aiMove1 = WonikConnect4.ai(game.board, true)
+    game.makeMove(1, aiMove1)
+
+    game.printBoard()
+    
+    winAssert(WonikConnect4.winCheck(game.board))
+
+    let aiMove2 = WonikConnect4.ai(game.board, false)
+    game.makeMove(2, aiMove2)
+
+    game.printBoard()
+
+    winAssert(WonikConnect4.winCheck(game.board))
+}
 
 game.printBoard()
-basicPrompt()
+basicPrompt();
