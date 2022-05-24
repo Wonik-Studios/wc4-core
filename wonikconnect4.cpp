@@ -17,8 +17,7 @@ class ConnectFourAI {
         // Takes in board as 2d array. Also takes in the player turn.
         // The parameter of recursionLevel will be important to determine whether to return
         // the best move or the evaluation of the position (it will return the best move when it is equal to 1)
-        static int makeMoveAI(vector<vector<int>> board, bool isPlayerOneTurn, int recursionLevel) {
-            int maxRecursion = 7;
+        static int makeMoveAI(vector<vector<int>> board, bool isPlayerOneTurn, int recursionLevel, int maxRecursion) {
             int bestChoiceVal = isPlayerOneTurn ? -200 : 200;
             int colBestChoice = 0;
             int result = checkForWin(board);
