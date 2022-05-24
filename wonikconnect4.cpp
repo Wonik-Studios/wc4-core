@@ -47,12 +47,12 @@ class ConnectFourAI {
                     }
                     else {
                         if(isPlayerOneTurn){
-                            if(move > bestChoiceVal){
+                            if(move >= bestChoiceVal){
                                 bestChoiceVal = move;
                                 colBestChoice = i;
                             }
                         } else {
-                            if(move < bestChoiceVal){
+                            if(move <= bestChoiceVal){
                                 bestChoiceVal = move;
                                 colBestChoice = i;
                             }
@@ -97,37 +97,38 @@ class ConnectFourAI {
             }
 
             for(int i=0; i < 6; i++) {
-                bool isPossible = true;
-
                 for(int j=0; j < 4; j++) {
                     if(horizontalPossibilities[j]) {
-                        int count = 0;
-                        int token = board[board.size() - i - 1][j];
-                        
+                        int playerOneCount = 0;
+                        int playerTwoCount = 0;
+
                         for(int z=0; z < 4; z++) {
-                            if(board[board.size() - i - 1][j + z] == 0) {
-                                int loc = j + z - 4;
-                                if(j + z - 4 < 0) {
-                                    loc = 0;
-                                }
+                            int tkn = board[board.size() - i - 1][j + z];
 
-                                while(loc != j + z && loc < sizeof(horizontalPossibilities)) {
-                                    horizontalPossibilities[loc] = false;
-                                    loc++;
+                            if(tkn == 0) {
+                                if(j + z < 4) {
+                                    for(int n=0; n < j + z; n++) {
+                                        horizontalPossibilities[j + z] = false;
+                                    }
+                                } else {
+                                    for(int n=0; n < 7 - j - z; n++) {
+                                        horizontalPossibilities[3 - n] = false;
+                                    }
                                 }
-                                break;
                             }
-                            else if(token != board[board.size() - i - 1][j + z]) {
-                                break;
+                            else if(tkn == 1) {
+                                playerOneCount++;
+                                playerTwoCount = 0;
+                                if(playerOneCount == 4) {
+                                    return 200;
+                                }
                             }
-                            count++;
-                        }
-
-                        if(count == 4) {
-                            if(token == 1) {
-                                return 200;
-                            } else {
-                                return -200;
+                            else {
+                                playerTwoCount++;
+                                playerOneCount = 0;
+                                if(playerTwoCount == 4) {
+                                    return -200;
+                                }
                             }
                         }
                     }
@@ -474,6 +475,108 @@ class ConnectFourAI {
             return true;
         }
 };
+
+bool continuationPrompt(GamePlay& gameplay, bool& first) {
+    std::string ans;
+    while(true) {
+        cout << "Do you wish to play another game? [yes/no]\n>>";
+        cin >> ans;
+
+        if(ans == "yes") {
+            gameplay.clearBoard();
+            gameplay.printBoard();
+            cout << "Would you like to go first? [First: 1, Second: 0]\n>>";
+            cin >> first;
+            return true;
+        }
+        else if(ans == "no") {
+            cout << "Quitting game..." << endl;
+            return false;
+        }
+        else {
+            cout << "\nSorry your input was invalid!" << endl;
+        }
+    }
+}
+
+int playC4() {
+    bool playWithFriend;
+    bool first = true;
+    int turn = 1;
+
+
+    cout << "To exit the game, type -1 in the prompt." << endl;
+    GamePlay gamePlay(true);
+    gamePlay.printBoard();
+
+    cout << "Would you like to play with an AI or with a friend? [AI : 0, Friend: 1]\n>>";
+    cin >> playWithFriend;
+
+    if(!playWithFriend) {
+        cout << "Would you like to go first? [First: 1, Second: 0]\n>>";
+        cin >> first;
+    }
+
+    while(true) {
+        int col;
+        if(turn % 2 != first && !playWithFriend) {
+            col = ConnectFourAI::makeMoveAI(gamePlay.getBoard() ,first == 0 ? true : false, 1) + 1;
+            cout << "AI move: " << col << endl;
+        } else {
+            cout << "Enter the column in which you wish to place the token: ";
+            cin >> col;
+        }
+
+        if(col == -1) {
+            cout << "Quitting game..." << endl;
+            break;
+        }
+        else if(col < 1 || col > 7) {
+            cout << "Sorry, your input was invalid, try again!" << endl;
+            continue;
+        }
+
+        gamePlay.makeMove(col - 1);
+        gamePlay.printBoard();
+
+        int result = ConnectFourAI::checkForWin(gamePlay.getBoard());
+        if(result == 200) {
+            cout << "Player " << 1 << " has won!" << endl;
+            if(!continuationPrompt(gamePlay, first)) {
+                break;
+            } else {
+                turn = 1;
+                continue;
+            }
+        }
+        else if(result == -200) {
+            cout << "Player " << 2 << " has won!" << endl;
+            if(!continuationPrompt(gamePlay, first)) {
+                break;
+            } else {
+                turn = 1;
+                continue;
+            }
+        }
+        else if(result == 0) {
+            cout << "It's a draw!" << endl;
+            if(!continuationPrompt(gamePlay, first)) {
+                break;
+            } else {
+                turn = 1;
+                continue;
+            }
+        }
+        else {
+            cout << "Evaluation of Position: " << gamePlay.evaluate(gamePlay.getBoard()) << endl;
+        }
+        turn++;
+    }
+
+
+    return 0;
+};
+
 
 namespace node_wrapper
 {
