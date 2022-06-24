@@ -1,4 +1,4 @@
-# wc4-core
+# Wonik Connect 4 (WC4)
 
 This README will only contain usage instructions for WC4. To view the actual project vision, please visit https://wonik.tech/project/wc4.
 
