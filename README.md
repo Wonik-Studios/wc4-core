@@ -1,4 +1,7 @@
 # wc4-core
+
+This README will only contain usage instructions for WC4. To view the actual project vision, please visit https://wonik.tech/project/wc4.
+
 WC4 which is short for Wonik Connect 4 Is a complex minimax algorithm that decides the best moves in the classical game Connect 4. Refer to the full introduction & showcase available on https://wonik.tech/project/wc4
 
 # Usage Instructions
